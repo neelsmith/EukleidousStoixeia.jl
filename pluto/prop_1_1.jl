@@ -28,10 +28,17 @@ end
 # ╔═╡ 2d5bedce-a70a-11ee-15c4-3386ff59c7ae
 md"""# Euclid 1.1"""
 
+# ╔═╡ 3dc818a5-1ded-4734-9638-4aab4b94c0c5
+md"""> This proposition starts from two arbitrary points, `A` and `B`."""
+
 # ╔═╡ a60346ac-d66f-4588-a2e0-3f3d80db769f
-@bind rerand PlutoUI.Button("Reset random points")
+@bind resetA PlutoUI.Button("Reset point A")
+
+# ╔═╡ 16fd9ccb-9763-45c3-b5dc-ac8ab45a2fce
+@bind resetB PlutoUI.Button("Reset point B")
 
 # ╔═╡ f67255a6-75b0-4d0a-a9ce-66341fd6888b
+# ╠═╡ show_logs = false
 constructionfig = Figure()
 
 # ╔═╡ 7ec6b746-d585-496c-bff4-85793104d063
@@ -48,32 +55,26 @@ whenever user reinitializes the figure.
 # ╔═╡ a06d381d-d9b7-471c-8ba8-91dce98af368
 a = Observable(Point2(0.0, 0.0))
 
-# ╔═╡ 8d7bb6f2-cbed-4f32-82d6-a2d5bb76e86e
-b = Observable(Point2(0.0, 0.0))
-
-# ╔═╡ 25e9f934-fc65-4797-88fe-d2470515e9e2
-r1 = Observable(Point2[])
-
-# ╔═╡ 1c37c94e-6f33-4d51-bc9a-25780dbc9c8c
-begin
-	rerand
-	r1[] = [a[], b[]]
-end
-
-# ╔═╡ 253a41c3-610d-4064-b25a-6c8bf6908401
-lines!(constructionaxis, r1)
-
 # ╔═╡ 693b5d35-fab8-4d7b-827c-6b3f7e6f5625
 begin
-	rerand
+	resetA
 	a[] = Point2(rand(-0.5:0.01:0.5), rand(-0.5:0.01:0.5))
 end
 
+# ╔═╡ 8d7bb6f2-cbed-4f32-82d6-a2d5bb76e86e
+b = Observable(Point2(0.0, 0.0))
+
 # ╔═╡ bad0512e-dda2-42fa-87f0-9e6c83493d2b
 begin
-	rerand
+	resetB
 	b[] = Point2(rand(-0.5:0.01:0.5), rand(-0.5:0.01:0.5))
 end
+
+# ╔═╡ 1c37c94e-6f33-4d51-bc9a-25780dbc9c8c
+r1 = @lift [$a, $b]
+
+# ╔═╡ 253a41c3-610d-4064-b25a-6c8bf6908401
+lines!(constructionaxis, r1)
 
 # ╔═╡ 8677fb5b-710d-4367-90e8-42501dc8b4c7
 md"""> **Plotting**"""
@@ -1921,20 +1922,21 @@ version = "3.5.0+0"
 # ╔═╡ Cell order:
 # ╠═cfe7398f-d9a7-474c-a8c9-00e49c9550dc
 # ╟─2d5bedce-a70a-11ee-15c4-3386ff59c7ae
+# ╟─3dc818a5-1ded-4734-9638-4aab4b94c0c5
+# ╟─a60346ac-d66f-4588-a2e0-3f3d80db769f
+# ╟─16fd9ccb-9763-45c3-b5dc-ac8ab45a2fce
 # ╟─47c3f6cb-aad7-49df-b678-89384da0dc2d
 # ╟─0b3544c1-a1a3-4634-af8c-d4b178137ce0
-# ╟─a60346ac-d66f-4588-a2e0-3f3d80db769f
-# ╠═f67255a6-75b0-4d0a-a9ce-66341fd6888b
-# ╠═1c37c94e-6f33-4d51-bc9a-25780dbc9c8c
+# ╟─f67255a6-75b0-4d0a-a9ce-66341fd6888b
 # ╠═253a41c3-610d-4064-b25a-6c8bf6908401
 # ╟─7ec6b746-d585-496c-bff4-85793104d063
 # ╟─0af250b1-718d-4fd9-9efb-debe951dc499
 # ╟─bf189040-c241-491c-9e1c-1deeda24d196
-# ╠═a06d381d-d9b7-471c-8ba8-91dce98af368
-# ╠═8d7bb6f2-cbed-4f32-82d6-a2d5bb76e86e
-# ╠═25e9f934-fc65-4797-88fe-d2470515e9e2
-# ╠═693b5d35-fab8-4d7b-827c-6b3f7e6f5625
-# ╠═bad0512e-dda2-42fa-87f0-9e6c83493d2b
+# ╟─a06d381d-d9b7-471c-8ba8-91dce98af368
+# ╟─693b5d35-fab8-4d7b-827c-6b3f7e6f5625
+# ╟─8d7bb6f2-cbed-4f32-82d6-a2d5bb76e86e
+# ╟─bad0512e-dda2-42fa-87f0-9e6c83493d2b
+# ╟─1c37c94e-6f33-4d51-bc9a-25780dbc9c8c
 # ╟─8677fb5b-710d-4367-90e8-42501dc8b4c7
 # ╟─7df4ee36-a612-46ee-a2a5-9c603da14a56
 # ╠═735fb402-6907-48e3-ba6c-b1160be0a86f
