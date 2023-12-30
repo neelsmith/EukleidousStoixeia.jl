@@ -28,8 +28,49 @@ end
 # ╔═╡ 2d5bedce-a70a-11ee-15c4-3386ff59c7ae
 md"""# Euclid 1.1"""
 
+# ╔═╡ a60346ac-d66f-4588-a2e0-3f3d80db769f
+@bind rerand PlutoUI.Button("Reset random points")
+
 # ╔═╡ f67255a6-75b0-4d0a-a9ce-66341fd6888b
 constructionfig = Figure()
+
+# ╔═╡ 7ec6b746-d585-496c-bff4-85793104d063
+constructionaxis = Axis(constructionfig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1))
+
+# ╔═╡ 0af250b1-718d-4fd9-9efb-debe951dc499
+md"""> **Observables**"""
+
+# ╔═╡ bf189040-c241-491c-9e1c-1deeda24d196
+md"""Center points of circles are arbitrary.  Assign them random values
+whenever user reinitializes the figure.
+"""
+
+# ╔═╡ a06d381d-d9b7-471c-8ba8-91dce98af368
+a = Observable(Point2(0.0, 0.0))
+
+# ╔═╡ 8d7bb6f2-cbed-4f32-82d6-a2d5bb76e86e
+b = Observable(Point2(0.0, 0.0))
+
+# ╔═╡ 693b5d35-fab8-4d7b-827c-6b3f7e6f5625
+begin
+	rerand
+	a[] = Point2(rand(-0.5:0.01:0.5), rand(-0.5:0.01:0.5))
+end
+
+# ╔═╡ bad0512e-dda2-42fa-87f0-9e6c83493d2b
+begin
+	rerand
+	b[] = Point2(rand(-0.5:0.01:0.5), rand(-0.5:0.01:0.5))
+end
+
+# ╔═╡ 8677fb5b-710d-4367-90e8-42501dc8b4c7
+md"""> **Plotting**"""
+
+# ╔═╡ 735fb402-6907-48e3-ba6c-b1160be0a86f
+scatter!(constructionaxis, a; color = :blue)
+
+# ╔═╡ 992a2dd1-fb2f-471e-acf8-0b931ee60ade
+scatter!(constructionaxis, b; color = :orange)
 
 # ╔═╡ 5456eb48-91ca-4765-aef6-c123854af95e
 html"""
@@ -1841,8 +1882,19 @@ version = "3.5.0+0"
 # ╠═cfe7398f-d9a7-474c-a8c9-00e49c9550dc
 # ╟─2d5bedce-a70a-11ee-15c4-3386ff59c7ae
 # ╟─47c3f6cb-aad7-49df-b678-89384da0dc2d
+# ╟─a60346ac-d66f-4588-a2e0-3f3d80db769f
 # ╟─0b3544c1-a1a3-4634-af8c-d4b178137ce0
 # ╠═f67255a6-75b0-4d0a-a9ce-66341fd6888b
+# ╠═7ec6b746-d585-496c-bff4-85793104d063
+# ╟─0af250b1-718d-4fd9-9efb-debe951dc499
+# ╟─bf189040-c241-491c-9e1c-1deeda24d196
+# ╠═a06d381d-d9b7-471c-8ba8-91dce98af368
+# ╠═8d7bb6f2-cbed-4f32-82d6-a2d5bb76e86e
+# ╠═693b5d35-fab8-4d7b-827c-6b3f7e6f5625
+# ╠═bad0512e-dda2-42fa-87f0-9e6c83493d2b
+# ╟─8677fb5b-710d-4367-90e8-42501dc8b4c7
+# ╠═735fb402-6907-48e3-ba6c-b1160be0a86f
+# ╠═992a2dd1-fb2f-471e-acf8-0b931ee60ade
 # ╟─5456eb48-91ca-4765-aef6-c123854af95e
 # ╟─1d1d5eb2-e2ef-4871-b276-7fda068c87a9
 # ╠═136f13fb-83e5-42ca-966f-2e5fcce4a398
