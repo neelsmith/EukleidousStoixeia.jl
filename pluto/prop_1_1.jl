@@ -51,6 +51,18 @@ a = Observable(Point2(0.0, 0.0))
 # ╔═╡ 8d7bb6f2-cbed-4f32-82d6-a2d5bb76e86e
 b = Observable(Point2(0.0, 0.0))
 
+# ╔═╡ 25e9f934-fc65-4797-88fe-d2470515e9e2
+r1 = Observable(Point2[])
+
+# ╔═╡ 1c37c94e-6f33-4d51-bc9a-25780dbc9c8c
+begin
+	rerand
+	r1[] = [a[], b[]]
+end
+
+# ╔═╡ 253a41c3-610d-4064-b25a-6c8bf6908401
+lines!(constructionaxis, r1)
+
 # ╔═╡ 693b5d35-fab8-4d7b-827c-6b3f7e6f5625
 begin
 	rerand
@@ -66,17 +78,33 @@ end
 # ╔═╡ 8677fb5b-710d-4367-90e8-42501dc8b4c7
 md"""> **Plotting**"""
 
-# ╔═╡ 735fb402-6907-48e3-ba6c-b1160be0a86f
-scatter!(constructionaxis, a; color = :blue)
+# ╔═╡ 7df4ee36-a612-46ee-a2a5-9c603da14a56
+md"""All plotting is dependent on value of `constructionstep`."""
 
-# ╔═╡ 992a2dd1-fb2f-471e-acf8-0b931ee60ade
-scatter!(constructionaxis, b; color = :orange)
+# ╔═╡ 82635fe2-283c-40de-9aff-3446b2923a55
+#text!(constructionaxis, b, text = rich("B", font = :regular, offset = (0.15, 0)))
+
+# ╔═╡ 3a0f74d9-27d2-4a81-894b-4edfa211d553
+
 
 # ╔═╡ 5456eb48-91ca-4765-aef6-c123854af95e
 html"""
 <br/><br/><br/><br/>
 <br/><br/><br/><br/>
 """
+
+# ╔═╡ 3092c355-c28d-4fa6-bc1a-3f8e03e6b2e5
+md"""> **Geometry for package**"""
+
+# ╔═╡ a32aacb2-6708-4438-8ee2-f4762a2c4c39
+function ptx(pt::Point)
+	pt.data[1]
+end
+
+# ╔═╡ f310d9b3-3eeb-414a-85bd-a5e43dd7118b
+function pty(pt::Point)
+	pt.data[2]
+end
 
 # ╔═╡ 1d1d5eb2-e2ef-4871-b276-7fda068c87a9
 md"""> **Content that could be hidden from user/reader**."""
@@ -96,7 +124,19 @@ constructionmenu =  vcat([0], collect(keys(construction))) |> sort
 md"""*Step* $(@bind constructionstep  Select(constructionmenu))"""
 
 # ╔═╡ 47c3f6cb-aad7-49df-b678-89384da0dc2d
-constructionstep == 0 ? md"" : aside(md"$(construction[constructionstep])")
+constructionstep == 0 ? md"" : aside(Markdown.parse((construction[constructionstep])))
+
+# ╔═╡ 735fb402-6907-48e3-ba6c-b1160be0a86f
+if constructionstep > 0 
+	scatter!(constructionaxis, a; color = :blue) 
+	text!(constructionaxis, a, text = "A")
+end
+
+# ╔═╡ 992a2dd1-fb2f-471e-acf8-0b931ee60ade
+if constructionstep > 0 
+	scatter!(constructionaxis, b; color = :orange)
+	text!(constructionaxis, b, text = "B")
+end
 
 # ╔═╡ 41277ec8-4e2b-4678-88d5-92036578f732
 proof = Dict([
@@ -1882,20 +1922,29 @@ version = "3.5.0+0"
 # ╠═cfe7398f-d9a7-474c-a8c9-00e49c9550dc
 # ╟─2d5bedce-a70a-11ee-15c4-3386ff59c7ae
 # ╟─47c3f6cb-aad7-49df-b678-89384da0dc2d
-# ╟─a60346ac-d66f-4588-a2e0-3f3d80db769f
 # ╟─0b3544c1-a1a3-4634-af8c-d4b178137ce0
+# ╟─a60346ac-d66f-4588-a2e0-3f3d80db769f
 # ╠═f67255a6-75b0-4d0a-a9ce-66341fd6888b
-# ╠═7ec6b746-d585-496c-bff4-85793104d063
+# ╠═1c37c94e-6f33-4d51-bc9a-25780dbc9c8c
+# ╠═253a41c3-610d-4064-b25a-6c8bf6908401
+# ╟─7ec6b746-d585-496c-bff4-85793104d063
 # ╟─0af250b1-718d-4fd9-9efb-debe951dc499
 # ╟─bf189040-c241-491c-9e1c-1deeda24d196
 # ╠═a06d381d-d9b7-471c-8ba8-91dce98af368
 # ╠═8d7bb6f2-cbed-4f32-82d6-a2d5bb76e86e
+# ╠═25e9f934-fc65-4797-88fe-d2470515e9e2
 # ╠═693b5d35-fab8-4d7b-827c-6b3f7e6f5625
 # ╠═bad0512e-dda2-42fa-87f0-9e6c83493d2b
 # ╟─8677fb5b-710d-4367-90e8-42501dc8b4c7
+# ╟─7df4ee36-a612-46ee-a2a5-9c603da14a56
 # ╠═735fb402-6907-48e3-ba6c-b1160be0a86f
 # ╠═992a2dd1-fb2f-471e-acf8-0b931ee60ade
+# ╠═82635fe2-283c-40de-9aff-3446b2923a55
+# ╠═3a0f74d9-27d2-4a81-894b-4edfa211d553
 # ╟─5456eb48-91ca-4765-aef6-c123854af95e
+# ╟─3092c355-c28d-4fa6-bc1a-3f8e03e6b2e5
+# ╠═a32aacb2-6708-4438-8ee2-f4762a2c4c39
+# ╠═f310d9b3-3eeb-414a-85bd-a5e43dd7118b
 # ╟─1d1d5eb2-e2ef-4871-b276-7fda068c87a9
 # ╠═136f13fb-83e5-42ca-966f-2e5fcce4a398
 # ╟─9513792d-5d07-43af-a210-21eea335f2f2
