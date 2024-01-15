@@ -20,7 +20,8 @@ export EuclidAngle, rad, deg, chord
 export EuclidTriangle
 export EuclidCircle, euclidCircle
 
-export Proposition, proposition, label, protasis, construction, proof
+export Proposition
+export proposition, label, protasis, construction, proof, kwdict, kws
 
 
 

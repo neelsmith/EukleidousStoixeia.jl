@@ -6,7 +6,9 @@ function euclid_1_1()
         "Euclid, Elements, 1.1",
         1, 4, 4,
         diagram_euclid_1_1,
-        []
+        Dict(
+            :segAB => EuclidLineSegment
+        )
     )
 end
 
@@ -16,10 +18,12 @@ Euclid 1.1 sets out one unit in the protasis, a line segment. This may optionall
 be supplied as a named parameter; alternatively it will be randomly generated.
 $(SIGNATURES)
 """
-function diagram_euclid_1_1(psg; fig = Figure(), segAB = nothing)
+function diagram_euclid_1_1(psg; fig = Figure(), propconfig = Dict{Symbol, DataType}())
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
 
-    seg = if isnothing(segAB)    
+    seg = if haskey(propconfig, :segAB)    
+        propconfig[:segAB]
+    else
         x1 = rand(Float64, 1)[1]
         y1 = rand(Float64, 1)[1]
   
@@ -28,8 +32,6 @@ function diagram_euclid_1_1(psg; fig = Figure(), segAB = nothing)
 
         EuclidLineSegment(EuclidPoint(x1,y1), EuclidPoint(x2,y2))
 
-    else
-        segAB
     end
 
 
@@ -47,7 +49,7 @@ function diagram_euclid_1_1(psg; fig = Figure(), segAB = nothing)
 end
 
 function euclid_1_1_protasis(psg, fig, segAB::EuclidLineSegment)
-    @info("PLotting protasis..")
+    @debug("Plotting protasis for Euclid 1.1..")
     # Only 1 step: add it no matter what:
     makieplot!(segAB, fig = fig)
     makielabel!(segAB, fig = fig)

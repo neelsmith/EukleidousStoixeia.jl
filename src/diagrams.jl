@@ -4,9 +4,9 @@
 """Return a Makie figure for a CtsUrn.
 $(SIGNATURES)
 """
-function diagram(u::CtsUrn)
+function diagram(u::CtsUrn; propconfig = Dict())
     prop = proposition(u)
-    prop.fnct(passagecomponent(u)) 
+    prop.fnct(passagecomponent(u), propconfig = propconfig) 
 end
 
 """Determine possible optional arguments to `diagram` function for

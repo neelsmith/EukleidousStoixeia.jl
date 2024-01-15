@@ -1,18 +1,18 @@
+"""Model of a proposition."""
 struct Proposition
     label::String
     protasis::Int
     construction::Int
     proof::Int
     fnct
-    kwlist
-
+    kwdict::Dict{Symbol, DataType}
 end
 
 
 """Construct a proposition for the text identified by a URN.
 $(SIGNATURES)
 """
-function proposition(u::CtsUrn)::Union{Proposition, Nothing}
+function proposition(u::CtsUrn; kwdict = Dict{Symbol, DataType}())::Union{Proposition, Nothing}
     if startswith(workcomponent(u), "tlg1799.tlg001")
         psg = passagecomponent(u)
         if psg == "1.1" || startswith(psg, "1.1.")
@@ -59,4 +59,20 @@ $(SIGNATURES)
 """
 function label(prop::Proposition)
     prop.label
+end
+
+
+
+"""Find dictionary of recognized proposition-specific parameters.
+$(SIGNATURES)
+"""
+function kwdict(prop::Proposition)::Dict{Symbol, DataType}
+    prop.kwdict
+end
+
+"""Find dictionary of recognized proposition-specific parameters.
+$(SIGNATURES)
+"""
+function kws(prop::Proposition)::Vector{Symbol}
+    prop.kwdict |> keys |> collect
 end
