@@ -18,6 +18,7 @@ end
 begin
 	using PlutoUI
 	using PlutoTeachingTools
+
 	
 	using WGLMakie
 	using Observables
@@ -48,7 +49,7 @@ md"""> This proposition starts from two arbitrary points, `A` and `B`."""
 constructionfig = Figure()
 
 # ╔═╡ 253a41c3-610d-4064-b25a-6c8bf6908401
-Circle(0.5,Point2(0.0, 0.0))
+#Circle(0.5,Point2(0.0, 0.0))
 
 # ╔═╡ 7ec6b746-d585-496c-bff4-85793104d063
 constructionaxis = Axis(constructionfig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1))
