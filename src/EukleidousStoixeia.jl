@@ -3,13 +3,16 @@ module EukleidousStoixeia
 using CitableText
 using CairoMakie
 
+using Documenter, DocStringExtensions
+
+
 export diagram
 export ptx, pty
 export EuclidPoint, euclidPoint
 export EuclidLineSegment, seglength
 export EuclidAngle
 export EuclidTriangle
-export EuclidCircle, euclidCircle
+export EuclidCircle, euclidCircle, rad, deg
 
 
 include("diagrams.jl")

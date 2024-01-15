@@ -34,3 +34,14 @@
     @test angle isa EuclidAngle
 
 end
+
+
+@testset "Test functions on angles" begin
+    a = EuclidPoint(1,0)
+    b = EuclidPoint(0,0)
+    c = EuclidPoint(0,1)
+    angle = EuclidAngle(a,b,c)
+
+    @test deg(angle) ≈ 45
+    @test round(rad(angle), digits = 4) == 0.7854
+end
