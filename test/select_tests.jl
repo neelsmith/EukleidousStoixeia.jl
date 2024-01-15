@@ -3,7 +3,7 @@ Pkg.activate("..")
 
 
 using EukleidousStoixeia
-
+using CairoMakie
 using Test
 using TestSetExtensions
 
