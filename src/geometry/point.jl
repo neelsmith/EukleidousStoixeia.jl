@@ -32,8 +32,6 @@ function pty(pt::Point)
 	pt.data[2]
 end
 
-
-
 """Add a linesegment to a Makie figure. Returns the Makie figure
 with line segment added to it.
 $(SIGNATURES)

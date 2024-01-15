@@ -41,3 +41,37 @@ $(SIGNATURES)
 function chord(angle::EuclidAngle)
     EuclidLineSegment(angle.a, angle.c)
 end
+
+
+
+
+"""Add an angle  to a Makie figure. Returns the Makie figure
+with triangle added to it.
+$(SIGNATURES)
+"""
+function makieplot!(angle::EuclidAngle; fig = Figure())
+	xs = [angle.a.x, angle.b.x, angle.c.x]
+	ys = [angle.a.y, angle.b.y, angle.c.y]
+    ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
+	lines!(ax, xs,ys)
+    #scatter!(ax, xs, ys)
+    fig
+end
+
+
+
+"""Add labelled points representing end points of a line segment to a Makie figure.
+Returns the Makie figure with labelled points added to it.
+$(SIGNATURES)
+"""
+function makielabel!(angle::EuclidAngle; fig = Figure())
+	xs = [angle.a.x, angle.b.x, angle.c.x]
+	ys = [angle.a.y, angle.b.y, angle.c.y]
+    ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
+
+    text!(ax, angle.a.x, angle.a.y; text = "A")
+    text!(ax, angle.b.x, angle.b.y; text = "B")
+    text!(ax, angle.c.x, angle.c.y; text = "C")
+    scatter!(ax, xs, ys)
+    fig
+end
