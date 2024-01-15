@@ -4,6 +4,8 @@ struct Proposition
     construction::Int
     proof::Int
     fnct
+    kwlist
+
 end
 
 
