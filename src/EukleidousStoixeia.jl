@@ -8,7 +8,7 @@ import Base.==
 using Documenter, DocStringExtensions
 
 
-export diagram, makieplot, makielabel
+export diagram, makieplot!, makielabel!
 export ptx, pty
 export GeomVect
 

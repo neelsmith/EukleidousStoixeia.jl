@@ -52,7 +52,7 @@ end
 with line segment added to it.
 $(SIGNATURES)
 """
-function makieplot(s::EuclidLineSegment; fig = Figure())
+function makieplot!(s::EuclidLineSegment; fig = Figure())
 	xs = [s.a.x, s.b.x]
 	ys = [s.a.y, s.b.y]
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
