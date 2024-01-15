@@ -44,4 +44,8 @@ end
 
     @test deg(angle) ≈ 45
     @test round(rad(angle), digits = 4) == 0.7854
+
+    crd = chord(angle)
+    @test crd isa EuclidLineSegment
+    @test round(seglength(crd), digits = 4) == 1.4142
 end

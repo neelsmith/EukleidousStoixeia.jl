@@ -10,9 +10,9 @@ export diagram
 export ptx, pty
 export EuclidPoint, euclidPoint
 export EuclidLineSegment, seglength
-export EuclidAngle
+export EuclidAngle, rad, deg, chord
 export EuclidTriangle
-export EuclidCircle, euclidCircle, rad, deg
+export EuclidCircle, euclidCircle
 
 
 include("diagrams.jl")
