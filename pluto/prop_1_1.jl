@@ -44,9 +44,18 @@ md"""> This proposition starts from two arbitrary points, `A` and `B`."""
 # ╔═╡ 16fd9ccb-9763-45c3-b5dc-ac8ab45a2fce
 @bind resetB PlutoUI.Button("Reset point B")
 
+# ╔═╡ 89afa5d6-76d2-431c-8c5a-bc12e0d00636
+
+
 # ╔═╡ f67255a6-75b0-4d0a-a9ce-66341fd6888b
 # ╠═╡ show_logs = false
 constructionfig = Figure()
+
+# ╔═╡ 54b0b736-9b8d-4521-abf5-bc44a6a0cba3
+constructionfig
+
+# ╔═╡ 0f198515-0cac-49a0-81de-4cac4dc0dd4f
+constructionfig |> typeof
 
 # ╔═╡ 253a41c3-610d-4064-b25a-6c8bf6908401
 #Circle(0.5,Point2(0.0, 0.0))
@@ -1974,7 +1983,10 @@ version = "3.5.0+0"
 # ╟─16fd9ccb-9763-45c3-b5dc-ac8ab45a2fce
 # ╟─47c3f6cb-aad7-49df-b678-89384da0dc2d
 # ╟─0b3544c1-a1a3-4634-af8c-d4b178137ce0
+# ╠═54b0b736-9b8d-4521-abf5-bc44a6a0cba3
+# ╠═89afa5d6-76d2-431c-8c5a-bc12e0d00636
 # ╟─f67255a6-75b0-4d0a-a9ce-66341fd6888b
+# ╠═0f198515-0cac-49a0-81de-4cac4dc0dd4f
 # ╠═253a41c3-610d-4064-b25a-6c8bf6908401
 # ╠═7ec6b746-d585-496c-bff4-85793104d063
 # ╟─0af250b1-718d-4fd9-9efb-debe951dc499
@@ -1995,7 +2007,7 @@ version = "3.5.0+0"
 # ╠═3a0f74d9-27d2-4a81-894b-4edfa211d553
 # ╟─5456eb48-91ca-4765-aef6-c123854af95e
 # ╟─3092c355-c28d-4fa6-bc1a-3f8e03e6b2e5
-# ╟─a32aacb2-6708-4438-8ee2-f4762a2c4c39
+# ╠═a32aacb2-6708-4438-8ee2-f4762a2c4c39
 # ╟─f310d9b3-3eeb-414a-85bd-a5e43dd7118b
 # ╟─1d1d5eb2-e2ef-4871-b276-7fda068c87a9
 # ╠═136f13fb-83e5-42ca-966f-2e5fcce4a398

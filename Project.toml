@@ -3,10 +3,11 @@ uuid = "c5bfe8c8-ca5a-4d49-8d58-c54fc594cf59"
 authors = ["Neel Smith  <dnsmith.neel@gmail.com>"]
 version = "0.1.0"
 
-
 [deps]
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 CitableText = "41e66566-473b-49d4-85b7-da83b66615d8"
 GLMakie = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
 GeometryBasics = "5c1252a2-5f33-56bf-86c9-59e7332b4326"
 Observables = "510215fc-4207-5dde-b226-833fc4488ee2"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+TestSetExtensions = "98d24dd4-01ad-11ea-1b02-c9a08f80db04"
