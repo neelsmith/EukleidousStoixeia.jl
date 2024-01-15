@@ -25,3 +25,10 @@ function kwlist(u::CtsUrn)
     []
 end
 
+
+"""Determine number of steps in specific section of a text reference.
+The URN must refer to a protasis, construction or proof section.
+"""
+function steps(u::CtsUrn)
+    0
+end

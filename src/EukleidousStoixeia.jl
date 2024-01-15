@@ -12,7 +12,7 @@ export EuclidTriangle
 export EuclidCircle, euclidCircle
 
 
-include("core.jl")
+include("diagrams.jl")
 include("geometry/point.jl")
 include("geometry/lineseg.jl")
 include("geometry/triangle.jl")
