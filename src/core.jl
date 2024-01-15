@@ -10,10 +10,18 @@ function diagram(u::CtsUrn; fig = Figure())
 
     - need to find right work (for now, just Euc.Elem.)
     - determine both proposition and part (protasis, kataskeuh, apodeixis)
-    
+
     =#
 
 
     fig
+end
+
+
+"""Determine possible optional arguments to `diagram` function for
+a specific text reference.
+"""
+function kwlist(u::CtsUrn)
+    []
 end
 
