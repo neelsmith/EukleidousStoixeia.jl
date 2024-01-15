@@ -21,10 +21,21 @@ function seglength(seg::EuclidLineSegment)
     sqrt(xs + ys)
 end
 
+"""???"""
+function normed(seg::EuclidLineSegment)
+    norm([seg.b.x - seg.a.x, seg.b.y, - seg.b.x])
+end
+
+function unitvect(seg::EuclidLineSegment)
+
+end
 
 """Represent a line segment as a vector of real numbers.
 $(SIGNATURES)
 """
 function vect(seg::EuclidLineSegment)
-    [seg.a.x, seg.a.y, seg.b.x, seg.b.y]
+    magn = seglength(seg)
+    direction = atan(seb)
+    #[seg.a.x, seg.a.y, seg.b.x, seg.b.y]
+
 end
