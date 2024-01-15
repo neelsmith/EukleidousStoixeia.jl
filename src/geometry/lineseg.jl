@@ -6,8 +6,8 @@ end
 
 
 function seglength(seg::EuclidLineSegment)
-    xs = (ptx(seg.a) - ptx(seg.b))^2
-    ys =  (pty(seg.a) - ptx(seg.y))^2
+    xs = (seg.a.x - seg.b.x)^2
+    ys =  (seg.a.y - seg.b.y)^2
     sqrt(xs + ys)
 end
 

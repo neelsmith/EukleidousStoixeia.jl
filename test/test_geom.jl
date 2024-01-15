@@ -13,6 +13,8 @@
 
     lineseg = EuclidLineSegment(ptA, ptB)
     @test lineseg isa EuclidLineSegment
+    @test seglength(lineseg) >= 0
+
 
     circle = EuclidCircle(ptA, 1)
     @test circle isa EuclidCircle
