@@ -30,12 +30,49 @@ function unitvect(seg::EuclidLineSegment)
 
 end
 
-"""Represent a line segment as a vector of real numbers.
+"""Represent a line segment as a geometric vector with
+magnitude and direction.
 $(SIGNATURES)
 """
-function vect(seg::EuclidLineSegment)
+function geomvect(seg::EuclidLineSegment)
     magn = seglength(seg)
     direction = atan(seb)
     #[seg.a.x, seg.a.y, seg.b.x, seg.b.y]
 
+end
+
+"""Represent a line segment as a vector of x and y magnitudes.
+$(SIGNATURES)
+"""
+function vect(seg::EuclidLineSegment)
+    [seg.b.x - seg.a.x, seg.b.y - seg.a.y]
+end
+
+"""Add a linesegment to a Makie figure. Returns the Makie figure
+with line segment added to it.
+$(SIGNATURES)
+"""
+function makieplot(s::EuclidLineSegment; fig = Figure())
+	xs = [s.a.x, s.b.x]
+	ys = [s.a.y, s.b.y]
+    ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
+	lines!(ax, xs,ys)
+    fig
+end
+
+
+"""Add labelled points representing end points of a line segment to a Makie figure.
+Returns the Makie figure with labelled points added to it.
+$(SIGNATURES)
+"""
+function makielabel!(s::EuclidLineSegment; fig = Figure())
+	xs = [s.a.x, s.b.x]
+	ys = [s.a.y, s.b.y]
+    ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
+	#lines!(ax, xs,ys)
+
+    text!(ax, s.a.x, s.a.y; text = "A")
+    text!(ax, s.b.x, s.b.y; text = "B")
+    scatter!(ax, xs, ys)
+    fig
 end

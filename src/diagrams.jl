@@ -7,7 +7,7 @@ function diagram(u::CtsUrn; fig = Figure())
     if isempty(fig.content)
         Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1))
     end
-
+    
     #= Based on URN, delegate to correct method:
 
     - need to find right work (for now, just Euc.Elem.)
