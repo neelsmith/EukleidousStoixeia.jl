@@ -1,6 +1,7 @@
 """Model of a proposition."""
 struct Proposition
     label::String
+    u::CtsUrn
     protasis::Int
     construction::Int
     proof::Int

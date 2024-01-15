@@ -53,7 +53,8 @@ with line segment added to it.
 $(SIGNATURES)
 """
 function makieplot!(s::EuclidLineSegment; fig = Figure(),
-    linewidth = 1, color = :gray
+    linewidth = 1, color = :gray#,
+    #markersize = 4, markercolor = :gray
     )
 	xs = [s.a.x, s.b.x]
 	ys = [s.a.y, s.b.y]
@@ -67,7 +68,10 @@ end
 Returns the Makie figure with labelled points added to it.
 $(SIGNATURES)
 """
-function makielabel!(s::EuclidLineSegment; fig = Figure())
+function makielabel!(s::EuclidLineSegment; 
+    fig = Figure(),
+    markersize = 4, color = :gray 
+    )
 	xs = [s.a.x, s.b.x]
 	ys = [s.a.y, s.b.y]
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
@@ -75,6 +79,6 @@ function makielabel!(s::EuclidLineSegment; fig = Figure())
 
     text!(ax, s.a.x, s.a.y; text = "A")
     text!(ax, s.b.x, s.b.y; text = "B")
-    scatter!(ax, xs, ys)
+    scatter!(ax, xs, ys; markersize = markersize, color = color)
     fig
 end
