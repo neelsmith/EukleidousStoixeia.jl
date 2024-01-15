@@ -5,6 +5,16 @@ struct EuclidCircle
     radius::Real    
 end
 
+
+"""True if center and radius of each circle are equal.
+If `exact` is true, use equality comparison, otherwise
+compare within tolerance of machine computation with 
+$(SIGNATURES)
+"""
+function ==(c1::EuclidCircle, c2::EuclidCircle; exact = false)
+    exact ?  c1.center == c2.center && c1.radius == c2.radius : c1.center == c2.center && c1.radius  ≈ c2.radius
+end
+
 """Construct a circle using a point and a line segment.
 $(SIGNATURES)
 """

@@ -5,6 +5,16 @@ struct EuclidAngle
     c::EuclidPoint
 end
 
+"""True if correspodning points of two angles are equal.
+$(SIGNATURES)
+"""
+function ==(a1::EuclidAngle, a2::EuclidAngle)
+    a1.a == a2.a &&
+    a1.b == a2.b &&
+    a1.c == a2.c
+end
+
+
 
 """Valiue of angle in radians.
 $(SIGNATURES)

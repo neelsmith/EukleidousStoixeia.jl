@@ -3,13 +3,14 @@ module EukleidousStoixeia
 using CitableText
 using CairoMakie
 
+import Base.==
 using Documenter, DocStringExtensions
 
 
 export diagram
 export ptx, pty
 export EuclidPoint, euclidPoint
-export EuclidLineSegment, seglength
+export EuclidLineSegment, seglength, vect
 export EuclidAngle, rad, deg, chord
 export EuclidTriangle
 export EuclidCircle, euclidCircle
