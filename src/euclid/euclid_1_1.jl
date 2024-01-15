@@ -57,7 +57,7 @@ function euclid_1_1_protasis(psg, fig, segAB::EuclidLineSegment)
 end
 
 function euclid_1_1_construction(psg, fig, segAB::EuclidLineSegment)
-    @info("Plot construction!")
+    @info("Plot construction for Euclid 1.1")
     # Check step level from psg
     euclid_1_1_protasis(psg, fig, segAB)
 

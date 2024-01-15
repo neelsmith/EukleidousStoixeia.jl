@@ -36,11 +36,15 @@ end
 with line segment added to it.
 $(SIGNATURES)
 """
-function makieplot!(pt::EuclidPoint; fig = Figure())
+function makieplot!(pt::EuclidPoint; 
+    fig = Figure(),
+    color = :gray,
+    markersize = 4
+    )
 	xs = [pt.x]
 	ys = [pt.y]
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
-	scatter!(ax, xs,ys)
+	scatter!(ax, xs, ys; color = color, markersize = markersize)
     fig
 end
 
@@ -49,7 +53,9 @@ end
 Returns the Makie figure with labelled points added to it.
 $(SIGNATURES)
 """
-function makielabel!(pt::EuclidPoint; fig = Figure(), labeltext = "")
+function makielabel!(pt::EuclidPoint;  labeltext = "",
+    fig = Figure()
+    )
     label = isempty(labeltext) ? "$(pt.x),$(pt.y)" : labeltext
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
     text!(ax, pt.x, pt.y; text = label)

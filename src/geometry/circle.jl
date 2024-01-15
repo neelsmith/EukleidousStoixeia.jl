@@ -45,13 +45,14 @@ end
 with line segment added to it.
 $(SIGNATURES)
 """
-function makieplot!(c::EuclidCircle; fig = Figure(), points = 500)
+function makieplot!(c::EuclidCircle; fig = Figure(), points = 500,
+    linewidth = 1, color = :gray
+    )
 
-  
     θ = LinRange(0, 2*π, points)
     xs, ys = c.center.x .+ c.radius*sin.(θ), c.center.y .+ c.radius*cos.(θ)
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
-    plot!(ax, xs,ys)
+    lines!(ax, xs, ys, color = color, linewidth = linewidth)
     fig
 end
 
@@ -60,7 +61,8 @@ end
 Returns the Makie figure with labelled points added to it.
 $(SIGNATURES)
 """
-function makielabel!(c::EuclidCircle; fig = Figure(),  labeltext = "")
+function makielabel!(c::EuclidCircle; fig = Figure(), labeltext = ""
+    )
     label = isempty(labeltext) ? "Origin" : labeltext
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
     text!(ax, c.center.x, c.center.y; text = label)

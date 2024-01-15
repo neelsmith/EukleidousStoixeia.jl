@@ -17,18 +17,20 @@ function ==(t1::EuclidTriangle, t2::EuclidTriangle)
 end
 
 
-
-
 """Add a triangle  to a Makie figure. Returns the Makie figure
 with triangle added to it.
 $(SIGNATURES)
 """
-function makieplot!(tr::EuclidTriangle; fig = Figure())
+function makieplot!(tr::EuclidTriangle; 
+    fig = Figure(),
+    linewidth = 1, color = :gray,
+    markersize = 4, markercolor = :gray
+    )
 	xs = [tr.a.x, tr.b.x, tr.c.x, tr.a.x]
 	ys = [tr.a.y, tr.b.y, tr.c.y, tr.a.y]
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
-	lines!(ax, xs,ys)
-    scatter!(ax, xs, ys)
+	lines!(ax, xs,ys, linewidth = linewidth, color = color)
+    scatter!(ax, xs, ys; markersize = markersize, color = markercolor)
     fig
 end
 

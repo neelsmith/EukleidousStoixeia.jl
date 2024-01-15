@@ -49,11 +49,13 @@ end
 with triangle added to it.
 $(SIGNATURES)
 """
-function makieplot!(angle::EuclidAngle; fig = Figure())
+function makieplot!(angle::EuclidAngle; fig = Figure(),
+    linewidth = 1, color = :gray
+    )
 	xs = [angle.a.x, angle.b.x, angle.c.x]
 	ys = [angle.a.y, angle.b.y, angle.c.y]
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
-	lines!(ax, xs,ys)
+	lines!(ax, xs, ys; linewidth = linewidth, color = color)
     #scatter!(ax, xs, ys)
     fig
 end
@@ -64,7 +66,8 @@ end
 Returns the Makie figure with labelled points added to it.
 $(SIGNATURES)
 """
-function makielabel!(angle::EuclidAngle; fig = Figure())
+function makielabel!(angle::EuclidAngle; fig = Figure()
+    )
 	xs = [angle.a.x, angle.b.x, angle.c.x]
 	ys = [angle.a.y, angle.b.y, angle.c.y]
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
