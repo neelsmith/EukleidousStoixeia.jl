@@ -29,23 +29,6 @@ ptB = EuclidPoint(1,0)
 # ╔═╡ 69db3e9e-1ba4-49e4-9d91-d692be4fa678
 seg1 = EuclidLineSegment(ptA, ptB)
 
-# ╔═╡ f43890e1-afbe-47a8-a154-4dde8a59800b
-function makieline(s::EuclidLineSegment; fig = Figure())
-	xs = [s.a.x, s.b.x]
-	ys = [s.a.y, s.b.y]
-
-	#ax = isempty(fig.content) ? Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
-    
-	#lines(xs,ys, 
-	#	figure = fig, 
-	#	axis = ax
-	#)
-	
-end
-
-# ╔═╡ 4b993100-a1e0-40b4-b25a-40560228e39d
-makieline(seg1)
-
 # ╔═╡ 510656a3-12a9-4102-a9dd-1d53d2b916a3
 #x = range(0, 10, length=100)
 
@@ -72,8 +55,6 @@ ax = Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1))
 # ╠═0f53fd26-d201-47ad-bd54-260da2c722ae
 # ╠═81596f85-9a14-416f-a533-415cc7dbbe83
 # ╠═69db3e9e-1ba4-49e4-9d91-d692be4fa678
-# ╠═f43890e1-afbe-47a8-a154-4dde8a59800b
-# ╠═4b993100-a1e0-40b4-b25a-40560228e39d
 # ╟─510656a3-12a9-4102-a9dd-1d53d2b916a3
 # ╠═71f3ece3-0d39-4b39-a231-83c118287f4f
 # ╠═2dbffe5c-3ec3-48cb-af4b-32c3460aecda

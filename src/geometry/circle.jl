@@ -40,3 +40,30 @@ function euclidCircle(c::Point2{Float64}, seg::EuclidLineSegment)
 end
 
 
+
+"""Add a linesegment to a Makie figure. Returns the Makie figure
+with line segment added to it.
+$(SIGNATURES)
+"""
+function makieplot!(c::EuclidCircle; fig = Figure(), points = 500)
+
+  
+    θ = LinRange(0, 2*π, points)
+    xs, ys = c.center.x .+ c.radius*sin.(θ), c.center.y .+ c.radius*cos.(θ)
+    ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
+    plot!(ax, xs,ys)
+    fig
+end
+
+
+"""Add labelled points representing end points of a line segment to a Makie figure.
+Returns the Makie figure with labelled points added to it.
+$(SIGNATURES)
+"""
+function makielabel!(c::EuclidCircle; fig = Figure(),  labeltext = "")
+    label = isempty(labeltext) ? "Origin" : labeltext
+    ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
+    text!(ax, c.center.x, c.center.y; text = label)
+    scatter!(ax, [c.center.x], [c.center.y])
+    fig
+end
