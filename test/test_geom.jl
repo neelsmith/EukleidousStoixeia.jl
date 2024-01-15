@@ -1,12 +1,15 @@
 @testset "Test constructors for basic Euclidean geometric types" begin
-    x1 = rand(Float64, 1)
-    y1 = rand(Float64, 1)
-    ptA = Point(x1,y1)
-    @test ptA isa Point
+    x1 = rand(Float64, 1)[1]
+    y1 = rand(Float64, 1)[1]
+    ptA = EuclidPoint(x1,y1)
+    @test ptA isa EuclidPoint
+    geomPoint = Point(x1,y1)
+    @test euclidPoint(geomPoint) isa EuclidPoint
 
-    x2 = rand(Float64, 1)
-    y2 = rand(Float64, 1)
-    ptB = Point(x2,y2)
+
+    x2 = rand(Float64, 1)[1]
+    y2 = rand(Float64, 1)[1]
+    ptB = EuclidPoint(x2,y2)
 
     lineseg = EuclidLineSegment(ptA, ptB)
     @test lineseg isa EuclidLineSegment
@@ -16,9 +19,9 @@
     @test euclidCircle(ptA, lineseg) isa EuclidCircle
 
         
-    x3 = rand(Float64, 1)
-    y3 = rand(Float64, 1)
-    ptC = Point(x3,y3) 
+    x3 = rand(Float64, 1)[1]
+    y3 = rand(Float64, 1)[1]
+    ptC = EuclidPoint(x3,y3) 
 
     triangle = EuclidTriangle(ptA, ptB, ptC)
     @test triangle isa EuclidTriangle
