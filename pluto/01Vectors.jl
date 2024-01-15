@@ -15,6 +15,7 @@ macro bind(def, element)
 end
 
 # ╔═╡ 09391c82-36f6-11eb-2a2a-3fd51aac6161
+# ╠═╡ show_logs = false
 begin
 	using Pkg
 	Pkg.add("LinearAlgebra")
@@ -39,23 +40,8 @@ md"## Setup"
 # ╔═╡ a0cd400c-59db-11eb-1042-b18e08b36a22
 pwd()
 
-# ╔═╡ 0ba06c64-36f6-11eb-2c44-1b6f26f93e27
-#Pkg.activate(file)
-
-# ╔═╡ 10ddf4b4-36f6-11eb-1915-ada7cb3e3ff1
-
-
-# ╔═╡ 14870e82-36f6-11eb-01b7-0be16908189c
-
-
 # ╔═╡ 18189976-36f6-11eb-0963-fd18b2364876
 plotly()
-
-# ╔═╡ 810693a8-3709-11eb-0017-1fc0037624ba
-
-
-# ╔═╡ b717b4d8-370c-11eb-393b-87966a8b8610
-
 
 # ╔═╡ 2237d020-36f6-11eb-3c17-0797a2cb6f60
 md"## Introduction"
@@ -946,12 +932,7 @@ md"It should be intuitive that two vectors that are scalar multiples of each oth
 # ╟─f9286e60-36f5-11eb-1ca6-0f843b90e1c8
 # ╠═a0cd400c-59db-11eb-1042-b18e08b36a22
 # ╠═09391c82-36f6-11eb-2a2a-3fd51aac6161
-# ╠═0ba06c64-36f6-11eb-2c44-1b6f26f93e27
-# ╠═10ddf4b4-36f6-11eb-1915-ada7cb3e3ff1
-# ╠═14870e82-36f6-11eb-01b7-0be16908189c
 # ╠═18189976-36f6-11eb-0963-fd18b2364876
-# ╠═810693a8-3709-11eb-0017-1fc0037624ba
-# ╠═b717b4d8-370c-11eb-393b-87966a8b8610
 # ╟─2237d020-36f6-11eb-3c17-0797a2cb6f60
 # ╟─6cf8532e-3a1f-11eb-0f52-51e45fc38fdd
 # ╟─73353d74-3a1f-11eb-3ef6-9312cc9dac4e
