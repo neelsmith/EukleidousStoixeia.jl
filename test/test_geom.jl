@@ -19,6 +19,8 @@
     circle = EuclidCircle(ptA, 1)
     @test circle isa EuclidCircle
     @test euclidCircle(ptA, lineseg) isa EuclidCircle
+    @test euclidCircle(geomPoint, 1) isa EuclidCircle
+    @test euclidCircle(geomPoint, lineseg) isa EuclidCircle
 
         
     x3 = rand(Float64, 1)[1]
