@@ -14,11 +14,11 @@ export ptx, pty
 
 
 
-export EuclidPoint, euclidPoint
+export EuclidPoint, euclidPoint, distance
 export EuclidLineSegment, seglength, vect
 export EuclidAngle, rad, deg, chord
 export EuclidTriangle
-export EuclidCircle, euclidCircle
+export EuclidCircle, euclidCircle, intersection
 
 export Proposition
 export proposition, label, protasis, construction, proof, kwdict, kws

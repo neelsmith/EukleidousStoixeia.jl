@@ -85,3 +85,11 @@ end
     angleint = EuclidAngle(aint,bint,cint)
     @test angle == angleint
 end
+
+@testset "Test functions on points" begin
+    @test distance(EuclidPoint(0,0), EuclidPoint(0,1)) == 1.0
+end
+
+@testset "Test functions on circles" begin
+
+end

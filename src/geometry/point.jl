@@ -20,6 +20,13 @@ function euclidPoint(p::Point)
 end
 
 
+"""Find distance between two points.
+$(SIGNATURES)
+"""
+function distance(p1::EuclidPoint, p2::EuclidPoint)
+    seglength(EuclidLineSegment(p1, p2))
+end
+
 """X value of a `GeometryBasics.Point`.
 """
 function ptx(pt::Point)

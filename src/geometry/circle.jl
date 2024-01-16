@@ -40,6 +40,13 @@ function euclidCircle(c::Point2{Float64}, seg::EuclidLineSegment)
 end
 
 
+"""Find points of itersection, if any, between two circles.
+$(SIGNATURES)
+"""
+function intersect(c1::EuclidCircle, c2::EuclidCircle)
+    
+end
+
 
 """Add a linesegment to a Makie figure. Returns the Makie figure
 with line segment added to it.
