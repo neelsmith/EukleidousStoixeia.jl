@@ -41,6 +41,8 @@ end
 
 
 """Find points of itersection, if any, between two circles.
+Based on discussion here: https://paulbourke.net/geometry/circlesphere/
+
 $(SIGNATURES)
 """
 function intersection(c1::EuclidCircle, c2::EuclidCircle)
@@ -49,15 +51,13 @@ function intersection(c1::EuclidCircle, c2::EuclidCircle)
         @warn("Circles c1 and c2 are identical.")
         nothing
     elseif dist > (c1.radius + c2.radius)
-        # No overlap
+        @warn("The two circles do not overlap.")
         return []
     elseif dist  < abs(c2.radius - c1.radius)
-        # One circle contained within the other
+        @warn("One circle is contained with the other.")
         return []
-    else
-
-
         
+    else
         # Make a right triangle on the line joining the circles' centers
         xdiff = c2.center.x - c1.center.x
         ydiff = c2.center.y - c1.center.y
@@ -72,15 +72,13 @@ function intersection(c1::EuclidCircle, c2::EuclidCircle)
         # Vertex of two sides is the point on the joining line:
         x2 = c1.center.x + (xdiff * baseA) / dist
         y2 = c1.center.y + (ydiff * baseA) / dist
-        #vrtx = EuclidPoint(x2, y2)
         
         # Offsets from center point of circle 1:
         rx = -ydiff * (ht/dist)
         ry = xdiff * (ht/dist)
 
-        # Coordinates of next vertext are the intersection
-        # of the two circles
-
+        # Coordinates of the next vertext in the triangle are radii
+        # where the two circles intersect:
         i1x = x2 + rx
         i1y = y2 + ry
         pt1 = EuclidPoint(i1x, i1y)
@@ -89,38 +87,8 @@ function intersection(c1::EuclidCircle, c2::EuclidCircle)
         i2y = y2 - ry
         pt2 = EuclidPoint(i2x, i2y)
 
-
-        
-        #=
-        base1 = (c1.radius^2 - c2.radius^2 + dist^2) / 2*dist
-        ht = sqrt(c1.radius^2 - base1^2)
-        
-        
-        xdiff = c2.center.x - c1.center.x
-        ydiff = c2.center.y - c1.center.y
-
-        
-        x2 = c1.center.x + (xdiff * (base1 / dist))
-        y2 = c1.center.y + (ydiff * (base1 / dist))
-        vrtx = EuclidPoint(x2,y2)
-        
-
-        rx = -ydiff * (ht / dist);
-        ry = xdiff * (ht / dist);
-
-        
-        xi = x2 + rx;
-        yi = y2 + ry;
-        pt1 = EuclidPoint(xi, yi)
-
-        xi_prime = x2 - rx;
-        yi_prime = y2 - ry;
-        pt2 = EuclidPoint(xi_prime, yi_prime)
-        =#
         return [pt1, pt2]
-
     end
-    
 end
 
 
