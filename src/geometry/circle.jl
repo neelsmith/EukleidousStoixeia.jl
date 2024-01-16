@@ -43,7 +43,46 @@ end
 """Find points of itersection, if any, between two circles.
 $(SIGNATURES)
 """
-function intersect(c1::EuclidCircle, c2::EuclidCircle)
+function intersection(c1::EuclidCircle, c2::EuclidCircle)
+    dist = distance(c1.center, c2.center)
+    if c1 == c2
+        @warn("Circles c1 and c2 are identical.")
+        nothing
+    elseif dist > (c1.radius + c2.radius)
+        # No overlap
+        return []
+    elseif dist  < abs(c2.radius - c1.radius)
+        # One circle contained within the other
+        return []
+    else
+        # Make a right triangle
+        base1 = (c1.radius^2 - c2.radius^2 + dist^2) / 2*dist
+        ht = sqrt(c1.radius^2 - base1^2)
+        
+        
+        xdiff = c2.center.x - c1.center.x
+        ydiff = c2.center.y - c1.center.y
+
+        
+        x2 = c1.center.x + (xdiff * (ht / dist))
+        y2 = c1.center.y + (ydiff * (ht / dist))
+        vrtx = EuclidPoint(x2,y2)
+        
+
+        rx = -ydiff * (ht / dist);
+        ry = xdiff * (ht / dist);
+
+        
+        xi = x2 + rx;
+        yi = y2 + ry;
+        pt1 = EuclidPoint(xi, yi)
+
+        xi_prime = x2 - rx;
+        yi_prime = y2 - ry;
+        pt2 = EuclidPoint(xi_prime, yi_prime)
+        return [pt1, pt2]
+
+    end
     
 end
 

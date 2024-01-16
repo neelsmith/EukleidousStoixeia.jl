@@ -13,6 +13,6 @@ end
 defaultsDict = Dict(
 
     "1.1" => Dict(
-        :segAB => EuclidLineSegment(EuclidPoint(0.3, 0), EuclidPoint(-0.3, 0))
+        :segAB => EuclidLineSegment(EuclidPoint(-0.3, 0), EuclidPoint(0.3, 0))
     )
 )

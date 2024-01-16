@@ -109,16 +109,24 @@ function euclid_1_1_construction(psg, fig, segAB::EuclidLineSegment;
     else
         4
     end
-
-    color = step == 1 ? hilite : color
     radius = seglength(segAB)
     circ = EuclidCircle(segAB.a, radius)
+    circ2 = EuclidCircle(segAB.b, radius)
+    intersects = intersection(circ, circ2)
+
+    # Step 1;
+    color = step == 1 ? hilite : color
     makieplot!(circ, fig = fig, color = color)
     
     if step > 1
-        color = step == 2 ? hilite : color
-        circ2 = EuclidCircle(segAB.b, radius)
+        color = step == 2 ? hilite : color    
         makieplot!(circ2, fig = fig, color = color)
+    end
+    if step > 2
+        @info("PLotting $(intersects[1])")
+        color = step == 3 ? hilite : color
+        makieplot!(intersects[1])
+        makielabel!(intersects[1])
     end
     fig
 end
