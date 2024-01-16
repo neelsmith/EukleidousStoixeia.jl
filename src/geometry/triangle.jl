@@ -45,7 +45,7 @@ function makielabel!(tr::EuclidTriangle; fig = Figure(), labeltext = [])
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
 
 
-    labels = isempty(labeltext) ? ["A", "B", "C"]: labeltext
+    labels = isempty(labeltext) ? ["A", "B", "C"] : labeltext
     text!(ax, tr.a.x, tr.a.y; text = labels[1])
     text!(ax, tr.b.x, tr.b.y; text = labels[2])
     text!(ax, tr.c.x, tr.c.y; text = labels[3])

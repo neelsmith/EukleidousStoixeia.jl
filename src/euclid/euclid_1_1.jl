@@ -113,7 +113,8 @@ function euclid_1_1_construction(psg, fig, segAB::EuclidLineSegment;
     circ = EuclidCircle(segAB.a, radius)
     circ2 = EuclidCircle(segAB.b, radius)
     intersects = intersection(circ, circ2)
-
+    @info("INtersection points $(intersects)")
+    @info("Diagram for step max $(step)")
     # Step 1;
     color = step == 1 ? hilite : color
     makieplot!(circ, fig = fig, color = color)
@@ -123,10 +124,11 @@ function euclid_1_1_construction(psg, fig, segAB::EuclidLineSegment;
         makieplot!(circ2, fig = fig, color = color)
     end
     if step > 2
-        @info("PLotting $(intersects[1])")
+        @info("ON to step 3.k..")
+        @info("Plotting $(intersects[1])")
         color = step == 3 ? hilite : color
-        makieplot!(intersects[1])
-        makielabel!(intersects[1])
+        makieplot!(intersects[1], color = hilite, markersize = 8)
+        makielabel!(intersects[1], labeltext = "INTERSECT")
     end
     fig
 end

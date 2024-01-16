@@ -43,7 +43,7 @@ end
 with line segment added to it.
 $(SIGNATURES)
 """
-function makieplot!(pt::EuclidPoint, fig = Figure();
+function makieplot!(pt::EuclidPoint; fig = Figure(),
     color = :gray,
     markersize = 4
     )

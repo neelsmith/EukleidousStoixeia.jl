@@ -64,8 +64,8 @@ function intersection(c1::EuclidCircle, c2::EuclidCircle)
         ydiff = c2.center.y - c1.center.y
 
         
-        x2 = c1.center.x + (xdiff * (ht / dist))
-        y2 = c1.center.y + (ydiff * (ht / dist))
+        x2 = c1.center.x + (xdiff * (base1 / dist))
+        y2 = c1.center.y + (ydiff * (base1 / dist))
         vrtx = EuclidPoint(x2,y2)
         
 
