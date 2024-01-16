@@ -70,15 +70,16 @@ $(SIGNATURES)
 """
 function makielabel!(s::EuclidLineSegment; 
     fig = Figure(),
-    markersize = 4, color = :gray 
+    markersize = 4, color = :gray,
+    labeltext = []
     )
 	xs = [s.a.x, s.b.x]
 	ys = [s.a.y, s.b.y]
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
 	#lines!(ax, xs,ys)
-
-    text!(ax, s.a.x, s.a.y; text = "A")
-    text!(ax, s.b.x, s.b.y; text = "B")
+    labels = isempty(labeltext) ? ["A", "B"] : labeltext
+    text!(ax, s.a.x, s.a.y; text = labels[1])
+    text!(ax, s.b.x, s.b.y; text = labels[2])
     scatter!(ax, xs, ys; markersize = markersize, color = color)
     fig
 end

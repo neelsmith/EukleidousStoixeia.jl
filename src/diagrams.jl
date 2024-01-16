@@ -1,5 +1,9 @@
-
-
+######################
+# 
+## Top-level functions for working with plottable propositions
+# identified by CTS URN
+#
+######################
 
 """Return a Makie figure for a CtsUrn.
 $(SIGNATURES)
@@ -22,7 +26,9 @@ function diagram(u::CtsUrn; propconfig = Dict(),
     ) 
 end
 
-
+"""Return a Makie figure for a Proposition.
+$(SIGNATURES)
+"""
 function diagram(prop::Proposition; propconfig = Dict(),
     markersize = 6, markercolor = :gray,
     linewidth = 1, color = :gray 
@@ -46,16 +52,8 @@ a specific text reference.
 $(SIGNATURES)
 """
 function kwlist(u::CtsUrn)
-    []
-end
-
-
-"""Determine number of steps in specific section of a text reference.
-The URN must refer to a protasis, construction or proof section.
-$(SIGNATURES)
-"""
-function steps(u::CtsUrn)
-    0
+    psg = collapsePassageTo(u, 2) |> passagecomponent
+    haskey(defaultsDict, psg) ? defaultsDict[psg] : []
 end
 
 

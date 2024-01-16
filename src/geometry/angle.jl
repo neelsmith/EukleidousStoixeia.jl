@@ -66,15 +66,16 @@ end
 Returns the Makie figure with labelled points added to it.
 $(SIGNATURES)
 """
-function makielabel!(angle::EuclidAngle; fig = Figure()
+function makielabel!(angle::EuclidAngle; fig = Figure(), labeltext = []
     )
 	xs = [angle.a.x, angle.b.x, angle.c.x]
 	ys = [angle.a.y, angle.b.y, angle.c.y]
     ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
 
-    text!(ax, angle.a.x, angle.a.y; text = "A")
-    text!(ax, angle.b.x, angle.b.y; text = "B")
-    text!(ax, angle.c.x, angle.c.y; text = "C")
+    labels = isempty(labeltext) ? ["A", "B", "C"] : labeltext
+    text!(ax, angle.a.x, angle.a.y; text = labels[1])
+    text!(ax, angle.b.x, angle.b.y; text = labels[2])
+    text!(ax, angle.c.x, angle.c.y; text = labels[3])
     scatter!(ax, xs, ys)
     fig
 end
