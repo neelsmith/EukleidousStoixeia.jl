@@ -22,13 +22,18 @@ $(SIGNATURES)
 function diagram_euclid_1_1(psg; fig = Figure(), 
     propconfig = Dict{Symbol, DataType}(),
     linewidth = 1, color = :gray,
-    markersize = 4, markercolor = :blue
+    markersize = 4, markercolor = :blue,
+    hilite = :orange
     )
-    ax = isempty(fig.content)  ?  Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1)) : fig.content[1]
+    ax = isempty(fig.content)  ? defaultAxis(fig) : fig.content[1]
 
     seg = if haskey(propconfig, :segAB)    
+        @debug("FOUND KEY IN PROPCONFIG")
         propconfig[:segAB]
+        
     else
+        @debug("key :segAB not found in propconfig")
+        @debug("dict was $(propconfig)")
         x1 = rand(Float64, 1)[1]
         y1 = rand(Float64, 1)[1]
   
@@ -38,37 +43,43 @@ function diagram_euclid_1_1(psg; fig = Figure(),
         EuclidLineSegment(EuclidPoint(x1,y1), EuclidPoint(x2,y2))
 
     end
-
+    @debug("Seg is now $(seg)")
 
     if contains(psg, "protasis")        
-        euclid_1_1_protasis(psg, fig, seg,
+        euclid_1_1_protasis(fig, seg;
             markersize = markersize, markercolor = markercolor, 
-            linewidth = linewidth, color = color
+            linewidth = linewidth, color = hilite
         )
 
     elseif contains(psg, "construction")
-        euclid_1_1_construction(psg, fig, seg,
+        euclid_1_1_construction(psg, fig, seg;
         markersize = markersize, markercolor = markercolor, 
-        linewidth = linewidth, color = color
+        linewidth = linewidth, color = color,
+        hilite = hilite
         )
     elseif contains(psg, "proof")
+        #...
     else
-
+        euclid_1_1_proof(psg, fig, seg;
+        markersize = markersize, markercolor = markercolor, 
+        linewidth = linewidth, color = color)
+    
         # do the whole thing
     end
     fig
 end
 
-function euclid_1_1_protasis(psg, fig, segAB::EuclidLineSegment;
+function euclid_1_1_protasis(fig, segAB::EuclidLineSegment;
     linewidth = 1, color = :gray,
     markersize = 4, markercolor = :blue
     )
-    @warn("Plotting protasis for Euclid 1.1..")
-    @info("Marker color is $(markercolor)")
+    @debug("Plotting protasis for Euclid 1.1..")
+    @debug("SegAB is $(segAB)")
+    @debug("Marker color is $(markercolor)")
     # Only 1 step: add it no matter what:
     makieplot!(segAB; 
         fig = fig,
-        linewidth = 1, color = :gray
+        linewidth = linewidth, color = color
     )
     makielabel!(segAB; 
         fig = fig,
@@ -78,26 +89,48 @@ function euclid_1_1_protasis(psg, fig, segAB::EuclidLineSegment;
     fig
 end
 
-function euclid_1_1_construction(psg, fig, segAB::EuclidLineSegment,
+function euclid_1_1_construction(psg, fig, segAB::EuclidLineSegment;
     linewidth = 1, color = :gray,
-    markersize = 4, markercolor = :blue
+    markersize = 4, markercolor = :blue,
+    hilite = :orange
     )
-    @info("Plot construction for Euclid 1.1, beginning with protasis")
+    @debug("Plot construction for Euclid 1.1, beginning with protasis")
+    @debug("Use segAB $(segAB)")
+    @debug("Construction: color is $(color)")
     # Check step level from psg
-    euclid_1_1_protasis(psg, fig, segAB;
-        markersize = markersize, makercolor = markercolor
+    euclid_1_1_protasis(fig, segAB;
+        markersize = markersize, markercolor = markercolor,
+        linewidth = linewidth, color = color
     )
 
+    parts = split(psg, ".")
+    step = if length(parts) > 3
+        parse(Int, parts[4])
+    else
+        4
+    end
+
+    color = step == 1 ? hilite : color
     radius = seglength(segAB)
     circ = EuclidCircle(segAB.a, radius)
-    makieplot!(circ, fig = fig)
-    circ2 = EuclidCircle(segAB.b, radius)
-    makieplot!(circ2, fig = fig)
+    makieplot!(circ, fig = fig, color = color)
+    
+    if step > 1
+        color = step == 2 ? hilite : color
+        circ2 = EuclidCircle(segAB.b, radius)
+        makieplot!(circ2, fig = fig, color = color)
+    end
     fig
 end
 
-function euclid_1_1_proof(psg, fig, segAB::EuclidLineSegment)
-    # Check step level from psg
+function euclid_1_1_proof(psg, fig, segAB::EuclidLineSegment;
+    linewidth = 1, color = :gray,
+    markersize = 4, markercolor = :blue
+    )
     
+    fig = euclid_1_1_construction(psg, fig, segAB;
+    markersize = markersize, markercolor = markercolor, 
+    linewidth = linewidth, color = color)
+
     fig
 end

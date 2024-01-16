@@ -33,6 +33,7 @@ include("geometry/circle.jl")
 include("geometry/angle.jl")
 
 
+include("euclid/defaults.jl")
 include("euclid/euclid_1_1.jl")
 
 include("proposition.jl")
