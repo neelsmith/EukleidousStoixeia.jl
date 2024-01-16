@@ -55,7 +55,43 @@ function intersection(c1::EuclidCircle, c2::EuclidCircle)
         # One circle contained within the other
         return []
     else
-        # Make a right triangle
+
+
+        
+        # Make a right triangle on the line joining the circles' centers
+        xdiff = c2.center.x - c1.center.x
+        ydiff = c2.center.y - c1.center.y
+        seg = EuclidLineSegment(c1.center, c2.center)
+        dist  = seglength(seg)
+
+        # Length of joining line for base from circle 1:
+        baseA = (c1.radius^2 - c2.radius^2 + dist^2 ) / (2 * dist)
+        dist - baseA
+        # Height of adjacent side:
+        ht = sqrt(c1.radius^2 - baseA^2)
+        # Vertex of two sides is the point on the joining line:
+        x2 = c1.center.x + (xdiff * baseA) / dist
+        y2 = c1.center.y + (ydiff * baseA) / dist
+        #vrtx = EuclidPoint(x2, y2)
+        
+        # Offsets from center point of circle 1:
+        rx = -ydiff * (ht/dist)
+        ry = xdiff * (ht/dist)
+
+        # Coordinates of next vertext are the intersection
+        # of the two circles
+
+        i1x = x2 + rx
+        i1y = y2 + ry
+        pt1 = EuclidPoint(i1x, i1y)
+        
+        i2x = x2 - rx
+        i2y = y2 - ry
+        pt2 = EuclidPoint(i2x, i2y)
+
+
+        
+        #=
         base1 = (c1.radius^2 - c2.radius^2 + dist^2) / 2*dist
         ht = sqrt(c1.radius^2 - base1^2)
         
@@ -80,6 +116,7 @@ function intersection(c1::EuclidCircle, c2::EuclidCircle)
         xi_prime = x2 - rx;
         yi_prime = y2 - ry;
         pt2 = EuclidPoint(xi_prime, yi_prime)
+        =#
         return [pt1, pt2]
 
     end

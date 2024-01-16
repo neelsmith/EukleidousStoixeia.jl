@@ -2,8 +2,8 @@
 """Add an Axis with default settings to a Figure.
 $(SIGNATURES)
 """
-function defaultAxis(fig::Figure)
-    ax = Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1))
+function defaultAxis(fig::Figure; title  = "")
+    ax = Axis(fig[1,1], aspect=DataAspect(), limits = (-1, 1, -1, 1), title = title)
     hidespines!(ax)
     hidedecorations!(ax)
     ax

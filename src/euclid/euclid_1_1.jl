@@ -5,7 +5,7 @@ function euclid_1_1()
     Proposition(
         "Euclid, Elements, 1.1",
         CtsUrn("urn:cts:greekLit:tlg1799.tlg001.stoicheia:1.1"),
-        1, 4, 4,
+        1, 3, 5,
         diagram_euclid_1_1,
         Dict(
             :segAB => EuclidLineSegment
@@ -25,7 +25,7 @@ function diagram_euclid_1_1(psg; fig = Figure(),
     markersize = 4, markercolor = :blue,
     hilite = :orange
     )
-    ax = isempty(fig.content)  ? defaultAxis(fig) : fig.content[1]
+    ax = isempty(fig.content)  ? defaultAxis(fig, title = "Euclid, Elements, 1.1") : fig.content[1]
 
     seg = if haskey(propconfig, :segAB)    
         @debug("FOUND KEY IN PROPCONFIG")
@@ -58,17 +58,27 @@ function diagram_euclid_1_1(psg; fig = Figure(),
         hilite = hilite
         )
     elseif contains(psg, "proof")
-        #...
-    else
         euclid_1_1_proof(psg, fig, seg;
         markersize = markersize, markercolor = markercolor, 
         linewidth = linewidth, color = color)
-    
-        # do the whole thing
+
+
+    else
+        # doing the whole thing proposition is static, unhilited,
+        # so it's enough just to do the construction:
+        euclid_1_1_construction(psg, fig, seg;
+        markersize = markersize, markercolor = markercolor, 
+        linewidth = linewidth, color = color,
+        hilite = hilite
+        )
     end
     fig
 end
 
+
+"""Add protasis of Euclid 1.1 to a Makie figure.
+$(SIGNATURES)
+"""
 function euclid_1_1_protasis(fig, segAB::EuclidLineSegment;
     linewidth = 1, color = :gray,
     markersize = 4, markercolor = :blue
@@ -89,6 +99,11 @@ function euclid_1_1_protasis(fig, segAB::EuclidLineSegment;
     fig
 end
 
+
+
+"""Add construction of Euclid 1.1 to a  Makie figure.
+$(SIGNATURES)
+"""
 function euclid_1_1_construction(psg, fig, segAB::EuclidLineSegment;
     linewidth = 1, color = :gray,
     markersize = 4, markercolor = :blue,
@@ -97,14 +112,14 @@ function euclid_1_1_construction(psg, fig, segAB::EuclidLineSegment;
     @debug("Plot construction for Euclid 1.1, beginning with protasis")
     @debug("Use segAB $(segAB)")
     @debug("Construction: color is $(color)")
-    # Check step level from psg
+
     euclid_1_1_protasis(fig, segAB;
         markersize = markersize, markercolor = markercolor,
         linewidth = linewidth, color = color
     )
 
     parts = split(psg, ".")
-    step = if length(parts) > 3
+    step = if length(parts) > 3 && parts[3] == "construction"
         parse(Int, parts[4])
     else
         4
@@ -113,8 +128,13 @@ function euclid_1_1_construction(psg, fig, segAB::EuclidLineSegment;
     circ = EuclidCircle(segAB.a, radius)
     circ2 = EuclidCircle(segAB.b, radius)
     intersects = intersection(circ, circ2)
-    @info("INtersection points $(intersects)")
-    @info("Diagram for step max $(step)")
+    hypotenuse = EuclidLineSegment(
+        circ.center, intersects[1]
+    )
+    hypotenuse2 = EuclidLineSegment(
+        circ2.center, intersects[1]
+    )
+
     # Step 1;
     color = step == 1 ? hilite : color
     makieplot!(circ, fig = fig, color = color)
@@ -124,23 +144,71 @@ function euclid_1_1_construction(psg, fig, segAB::EuclidLineSegment;
         makieplot!(circ2, fig = fig, color = color)
     end
     if step > 2
-        @info("ON to step 3.k..")
-        @info("Plotting $(intersects[1])")
         color = step == 3 ? hilite : color
-        makieplot!(intersects[1], color = hilite, markersize = 8)
-        makielabel!(intersects[1], labeltext = "INTERSECT")
+        makieplot!(intersects[1], color = color, markersize = 8, fig = fig)
+        makielabel!(intersects[1], labeltext = "C", fig = fig)
+
+        makieplot!(hypotenuse; fig = fig, color = color)
+        makieplot!(hypotenuse2; fig = fig, color = color)
     end
+
     fig
 end
 
+"""Add proof of Euclid 1.1 to a  Makie figure.
+$(SIGNATURES)
+"""
 function euclid_1_1_proof(psg, fig, segAB::EuclidLineSegment;
     linewidth = 1, color = :gray,
-    markersize = 4, markercolor = :blue
+    markersize = 4, markercolor = :blue,
+    hilite = :lawngreen, hilite2 = :purple2
     )
     
     fig = euclid_1_1_construction(psg, fig, segAB;
     markersize = markersize, markercolor = markercolor, 
     linewidth = linewidth, color = color)
 
-    fig
+    parts = split(psg, ".")
+    if length(parts) > 3 && parts[3] == "proof"
+        step = parse(Int, parts[4])
+
+        radius = seglength(segAB)
+        circ = EuclidCircle(segAB.a, radius)
+        circ2 = EuclidCircle(segAB.b, radius)
+        intersects = intersection(circ, circ2)
+        hypotenuse = EuclidLineSegment(
+            circ.center, intersects[1]
+        )
+        hypotenuse2 = EuclidLineSegment(
+            circ2.center, intersects[1]
+        )
+
+        if step == 1
+            makieplot!(hypotenuse, fig = fig, color = hilite)
+            makieplot!(segAB, fig = fig, color = hilite2)
+        elseif step == 2
+            makieplot!(hypotenuse2, fig = fig, color = hilite2)
+            makieplot!(segAB, fig = fig, color = hilite)
+        elseif step == 3
+            makieplot!(hypotenuse, fig = fig, color = hilite)
+            makieplot!(hypotenuse2, fig = fig, color = hilite)
+            makieplot!(segAB, fig = fig, color = hilite2)
+        elseif step == 4
+            makieplot!(hypotenuse, fig = fig, color = hilite)
+            makieplot!(hypotenuse2, fig = fig, color = hilite2)
+        elseif step == 5
+            makieplot!(hypotenuse, fig = fig, color = hilite)
+            makieplot!(hypotenuse2, fig = fig, color = hilite)
+            makieplot!(segAB, fig = fig, color = hilite)
+        end
+    
+
+    else
+        fig 
+    end
+
+
+  
+
+    
 end
