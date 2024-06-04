@@ -55,14 +55,25 @@ end
 </style>
 """
 
+# ╔═╡ 567d219a-c1c0-4bf1-ad59-ede8b244844b
+TableOfContents()
+
 # ╔═╡ b4612b5b-bcdd-4a17-b29b-82fd7d868a63
 md"""# Reading Euclid, *Elements*
 
 > The Julia package `EukleidouStoixeia` models both the diagrams and the text contents of Euclid's *Elements*, and lets you work with both kinds of content using CTS URNs.
 """
 
+# ╔═╡ 29a9fa5a-6390-451e-a098-246e925594a2
+md"""!!! warning "Just guessing"
+
+    Find forms in `lsjx` namespace...
+"""
+
 # ╔═╡ bf55c457-614a-46f7-acf8-c0dfef4db0fd
 #contains(passagecomponent(plotu), "enunciation") ? md"" : diagram(plotu)
+
+
 
 # ╔═╡ e0e0d1d9-9d25-4312-b201-f1d52b8300fc
 html"""
@@ -73,6 +84,47 @@ html"""
 <br/><br/><br/><br/><br/>
 <hr/>
 """
+
+# ╔═╡ 6ed7d2a7-1db4-4d28-8727-095bb88e2581
+md"""## Things you can ignore"""
+
+# ╔═╡ 554d91a5-ddb2-4c0e-9d50-92df7929d4c7
+md"""> User selection of forms"""
+
+# ╔═╡ 1b0e1363-2470-489f-8180-f9b0d43ba791
+md"""> Tokenizing"""
+
+# ╔═╡ 8ebb87b7-e39d-45cc-9b44-74f134c8d4db
+ortho = literaryGreek()
+
+# ╔═╡ 2fd21a98-8ab5-4b18-bfd3-fe795365d95e
+"""Format Markdown display of form"""
+function formatanalysis(an)
+	an.form |> greekForm |> Kanones.label
+end
+
+# ╔═╡ b9a5b29b-8325-4812-b736-218deb8f59af
+"""Format passages for markdown display."""
+function formatpassage(psg, checklist)
+	#string("*", titlecase(workid(psg.urn)),"* ", passagecomponent(psg.urn), ":\n> ", psg.text)
+	tkns = split(psg.text)
+	nopunct = [filter(c -> ! ispunct(c), t) for t in tkns]
+
+	wrapped = []
+	for (i, tkn) in enumerate(nopunct)
+		if tkn in checklist
+			s = string("<span class=\"hilite\">", tkns[i], "</span>")
+			push!(wrapped, s)
+		else
+			push!(wrapped, tkns[i])
+		end
+	end
+	
+	htmlstr = join(wrapped, " ")
+	out = string("<blockquote>",htmlstr,"</blockquote>")
+	#html"""<blockquote>$(htmlstr)</blockquote>"""
+	out
+end
 
 # ╔═╡ d309a145-b354-4f01-b020-1e2f272978e6
 md"""> Parsing"""
@@ -138,7 +190,7 @@ u = CtsUrn("urn:cts:greekLit:tlg1799.tlg001:")
 plotu = step == "all" ? addpassage(u, psg) : addpassage(u, step)
 
 # ╔═╡ a75d3fa3-c827-4e72-951d-3abf831670fe
-md"""**Text and diagram of** *$(plotu)*:"""
+md"""**URN**: *$(plotu)*:"""
 
 # ╔═╡ 8328c84b-f899-45ed-b678-e96ef1f77dc9
 corpus = fromcex(joinpath(pwd() |> dirname, "text", "elements.cex"), CitableTextCorpus, FileReader)
@@ -149,6 +201,63 @@ textpsg = filter(corpus.passages) do txtpsg
 	startswith(passagecomponent(txtpsg.urn), string(passagecomponent(plotu),"."))
 end
 
+# ╔═╡ 5092761f-9391-47d5-a141-e7e43d054085
+textpsg |> typeof
+
+# ╔═╡ 174f0d6f-81fe-4e91-8cb7-2d4ac309efcc
+tkns = tokenize(textpsg[1], ortho)
+
+# ╔═╡ 9401d4b9-dabb-4f7e-98a4-537447992f00
+lex = filter(t -> t.tokentype isa LexicalToken, tkns)
+
+# ╔═╡ a5e7e10f-64b7-44ce-9307-a6b8cd1eb1b8
+formslist = [t.passage.text for t in lex]
+
+# ╔═╡ 6820146b-f802-4d9c-b65f-899677cd4e1a
+formsmenu = [i => formslist[i] for i in 1:length(formslist)]
+
+# ╔═╡ 6d32fd85-9dba-4548-992e-8cb8b5c20614
+md"""*See analyses for*: $(@bind showthese MultiCheckBox(formsmenu))"""
+
+# ╔═╡ 298dcff3-410e-4b68-9c6c-334e8f90106c
+	selectedtokens = map(idx -> formslist[idx], showthese)	
+
+# ╔═╡ cc85d1f6-eea4-4f04-86bd-3ae11af518d4
+formatpassage(textpsg[1], selectedtokens) |> HTML 
+
+# ╔═╡ 50afd82a-445c-4f98-8c10-b200b4011c20
+parses = parsewordlist(formslist, parser)
+
+# ╔═╡ 07831cc2-e311-4de1-aeb3-0da4681d8601
+begin
+	formsdisplay  = []
+	for selectedform in showthese
+		formdisplay = join([string("1. **", formslist[selectedform], "**, ", formatanalysis(a)) for a in parses[selectedform]],"\n")# |> Markdown.parse
+		push!(formsdisplay, formdisplay)
+	end
+	join(formsdisplay,"\n") |> Markdown.parse
+end
+
+# ╔═╡ 0d83098c-26e4-491e-897a-37d748018387
+noanalysisidx = findall(plist -> isempty(plist), parses)
+
+# ╔═╡ 5291c89e-acf2-4ac7-b703-1dd96e11d68e
+if isempty(noanalysisidx)
+else
+
+md"""!!! warning "Unanalyzed forms!"
+
+    The following forms could not be analyzed:
+"""
+end
+
+# ╔═╡ 7a4625ca-0cf7-41ba-b593-4fcb7ac984d1
+if isempty(noanalysisidx)
+else
+	failed = map(idx -> string("- ", formslist[idx]), noanalysisidx)
+	faillist = join(failed,"\n") |> Markdown.parse
+end
+
 # ╔═╡ 1ee112da-de14-4288-a6fc-b7f5eead1f3e
 function formatpsg(p)
 	p.text
@@ -157,18 +266,55 @@ end
 # ╔═╡ 3fd7740d-d9a4-45b3-8276-f1a1cfc35d76
 "**Text**\n\n" * join(map(p -> formatpsg(p), textpsg), "\n\n") |> Markdown.parse #|> aside
 
+# ╔═╡ 90d14fcc-0cb8-4782-beab-127562f88a12
+md"""> CSS"""
+
+# ╔═╡ ca9e21e4-feb8-4a1c-99c9-28d175a6a2c6
+@htl """
+<style>
+	pluto-output {
+		--julia-mono-font-stack: system-ui,sans-serif;
+	}
+	.hilite {
+		background-color: yellow;
+		font-weight: bold;
+	}
+</style>
+"""
+
 # ╔═╡ Cell order:
 # ╟─a4874afc-27c8-4247-b722-5fb6804742d0
-# ╠═ca58787e-b42d-11ee-1d6f-e71d6adf63ed
+# ╟─ca58787e-b42d-11ee-1d6f-e71d6adf63ed
+# ╟─567d219a-c1c0-4bf1-ad59-ede8b244844b
 # ╟─b4612b5b-bcdd-4a17-b29b-82fd7d868a63
 # ╟─247a6705-982a-468b-85f0-0dca3411ba9c
 # ╟─bccd061f-c81f-4f79-8469-118359e93686
 # ╟─a75d3fa3-c827-4e72-951d-3abf831670fe
-# ╠═3fd7740d-d9a4-45b3-8276-f1a1cfc35d76
+# ╟─3fd7740d-d9a4-45b3-8276-f1a1cfc35d76
+# ╟─cc85d1f6-eea4-4f04-86bd-3ae11af518d4
+# ╟─6d32fd85-9dba-4548-992e-8cb8b5c20614
+# ╟─07831cc2-e311-4de1-aeb3-0da4681d8601
+# ╟─5291c89e-acf2-4ac7-b703-1dd96e11d68e
+# ╟─7a4625ca-0cf7-41ba-b593-4fcb7ac984d1
+# ╟─29a9fa5a-6390-451e-a098-246e925594a2
 # ╠═bf55c457-614a-46f7-acf8-c0dfef4db0fd
 # ╟─e0e0d1d9-9d25-4312-b201-f1d52b8300fc
+# ╟─6ed7d2a7-1db4-4d28-8727-095bb88e2581
+# ╟─554d91a5-ddb2-4c0e-9d50-92df7929d4c7
+# ╠═a5e7e10f-64b7-44ce-9307-a6b8cd1eb1b8
+# ╠═298dcff3-410e-4b68-9c6c-334e8f90106c
+# ╠═6820146b-f802-4d9c-b65f-899677cd4e1a
+# ╟─1b0e1363-2470-489f-8180-f9b0d43ba791
+# ╠═5092761f-9391-47d5-a141-e7e43d054085
+# ╠═8ebb87b7-e39d-45cc-9b44-74f134c8d4db
+# ╠═174f0d6f-81fe-4e91-8cb7-2d4ac309efcc
+# ╠═9401d4b9-dabb-4f7e-98a4-537447992f00
+# ╠═2fd21a98-8ab5-4b18-bfd3-fe795365d95e
+# ╠═b9a5b29b-8325-4812-b736-218deb8f59af
 # ╟─d309a145-b354-4f01-b020-1e2f272978e6
-# ╠═4bbc2347-42cd-4f96-8889-d367858d4254
+# ╠═50afd82a-445c-4f98-8c10-b200b4011c20
+# ╠═0d83098c-26e4-491e-897a-37d748018387
+# ╟─4bbc2347-42cd-4f96-8889-d367858d4254
 # ╟─1e93c36e-697b-4a49-9422-6dba6523c7a8
 # ╟─6f95e2b3-f6e9-4006-814d-8da9816e3b71
 # ╟─d7029334-d5dc-42fc-a235-73dc64b2f535
@@ -182,3 +328,5 @@ end
 # ╟─8328c84b-f899-45ed-b678-e96ef1f77dc9
 # ╟─8230d406-9415-4b28-9c35-32e972e2cc90
 # ╟─1ee112da-de14-4288-a6fc-b7f5eead1f3e
+# ╟─90d14fcc-0cb8-4782-beab-127562f88a12
+# ╠═ca9e21e4-feb8-4a1c-99c9-28d175a6a2c6
