@@ -59,10 +59,13 @@ end
 TableOfContents()
 
 # ╔═╡ b4612b5b-bcdd-4a17-b29b-82fd7d868a63
-md"""# Reading Euclid, *Elements*
+md"""## Reading Euclid, *Elements*
 
 > The Julia package `EukleidouStoixeia` models both the diagrams and the text contents of Euclid's *Elements*, and lets you work with both kinds of content using CTS URNs.
 """
+
+# ╔═╡ 4afdc4f4-251f-477a-8632-eff347679592
+@bind reload Button("Reload local data")
 
 # ╔═╡ 29a9fa5a-6390-451e-a098-246e925594a2
 md"""!!! warning "Just guessing"
@@ -87,6 +90,15 @@ html"""
 
 # ╔═╡ 6ed7d2a7-1db4-4d28-8727-095bb88e2581
 md"""## Things you can ignore"""
+
+# ╔═╡ 118a6a8d-ae3e-4d8c-8170-0c9c84a2dc9f
+md"""> ### Parser configuration"""
+
+# ╔═╡ 1e174d83-c6bc-404a-83d1-2fb33344abce
+kanones = joinpath("..", "..", "Kanones.jl")
+
+# ╔═╡ 923cf047-061f-48ea-8458-1e9099e9dd0e
+rulesds = joinpath(kanones, "datasets", "literarygreek-rules")
 
 # ╔═╡ 554d91a5-ddb2-4c0e-9d50-92df7929d4c7
 md"""> User selection of forms"""
@@ -130,7 +142,7 @@ end
 md"""> Parsing"""
 
 # ╔═╡ 1e93c36e-697b-4a49-9422-6dba6523c7a8
-parserurl = "http://shot.holycross.edu/morphology/comprehensive-current.csv"
+parserurl = "http://shot.holycross.edu/morphology/attic_core-current.cex"
 
 # ╔═╡ 6f95e2b3-f6e9-4006-814d-8da9816e3b71
 """Download parser data from URN `u` and instantiate a DataFrame parser.""" 
@@ -143,6 +155,16 @@ end
 
 # ╔═╡ 4bbc2347-42cd-4f96-8889-d367858d4254
 parser = getremoteparser(parserurl)
+
+# ╔═╡ 283e5321-130e-49f1-8c45-01611c2e17d5
+md"""> Building and managing parsers"""
+
+# ╔═╡ 915a137f-a0a3-4d46-bf4d-f6bfe1780fbc
+"""Read local dataset files and create a DataFrame of all possible parses.
+"""
+function readlocal()
+	[rulesds, lsjds, local_data] |> dataset |> simpleDF
+end
 
 # ╔═╡ d7029334-d5dc-42fc-a235-73dc64b2f535
 md"""> Diagrams (omitted in this nb)"""
@@ -287,6 +309,7 @@ md"""> CSS"""
 # ╟─ca58787e-b42d-11ee-1d6f-e71d6adf63ed
 # ╟─567d219a-c1c0-4bf1-ad59-ede8b244844b
 # ╟─b4612b5b-bcdd-4a17-b29b-82fd7d868a63
+# ╟─4afdc4f4-251f-477a-8632-eff347679592
 # ╟─247a6705-982a-468b-85f0-0dca3411ba9c
 # ╟─bccd061f-c81f-4f79-8469-118359e93686
 # ╟─a75d3fa3-c827-4e72-951d-3abf831670fe
@@ -300,6 +323,9 @@ md"""> CSS"""
 # ╠═bf55c457-614a-46f7-acf8-c0dfef4db0fd
 # ╟─e0e0d1d9-9d25-4312-b201-f1d52b8300fc
 # ╟─6ed7d2a7-1db4-4d28-8727-095bb88e2581
+# ╟─118a6a8d-ae3e-4d8c-8170-0c9c84a2dc9f
+# ╠═1e174d83-c6bc-404a-83d1-2fb33344abce
+# ╠═923cf047-061f-48ea-8458-1e9099e9dd0e
 # ╟─554d91a5-ddb2-4c0e-9d50-92df7929d4c7
 # ╠═a5e7e10f-64b7-44ce-9307-a6b8cd1eb1b8
 # ╠═298dcff3-410e-4b68-9c6c-334e8f90106c
@@ -309,14 +335,16 @@ md"""> CSS"""
 # ╠═8ebb87b7-e39d-45cc-9b44-74f134c8d4db
 # ╠═174f0d6f-81fe-4e91-8cb7-2d4ac309efcc
 # ╠═9401d4b9-dabb-4f7e-98a4-537447992f00
-# ╠═2fd21a98-8ab5-4b18-bfd3-fe795365d95e
-# ╠═b9a5b29b-8325-4812-b736-218deb8f59af
+# ╟─2fd21a98-8ab5-4b18-bfd3-fe795365d95e
+# ╟─b9a5b29b-8325-4812-b736-218deb8f59af
 # ╟─d309a145-b354-4f01-b020-1e2f272978e6
-# ╠═50afd82a-445c-4f98-8c10-b200b4011c20
-# ╠═0d83098c-26e4-491e-897a-37d748018387
-# ╟─4bbc2347-42cd-4f96-8889-d367858d4254
+# ╟─50afd82a-445c-4f98-8c10-b200b4011c20
+# ╟─0d83098c-26e4-491e-897a-37d748018387
+# ╠═4bbc2347-42cd-4f96-8889-d367858d4254
 # ╟─1e93c36e-697b-4a49-9422-6dba6523c7a8
-# ╟─6f95e2b3-f6e9-4006-814d-8da9816e3b71
+# ╠═6f95e2b3-f6e9-4006-814d-8da9816e3b71
+# ╠═283e5321-130e-49f1-8c45-01611c2e17d5
+# ╠═915a137f-a0a3-4d46-bf4d-f6bfe1780fbc
 # ╟─d7029334-d5dc-42fc-a235-73dc64b2f535
 # ╠═b087a148-46fb-450a-b3da-f3f00af1b9a7
 # ╠═c1d077e3-92b0-4b91-b095-d74781e10e34
